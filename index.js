@@ -1,15 +1,17 @@
-// const config= require('./config/config')
-// const Wechat = require('./wechat/wechat') 
+// koa 框架
+const Koa = require('koa');
 
-var express = require('express')
-var app = express()
-app.set('views', './view')
-app.set('view engine', 'pug')
+const wechat = require('./wechat/g')
+const config = {
+  wechat:{
+    appID: 'wxd38096734e06c571',
+    appSecret: 'd49c1d075ab9fc0b7c197fbb93d31018',
+    token: 'zhaowei123'
+  }
+}
+const convert = require('koa-convert');
+const app = new Koa()
 
-// respond with "hello world" when a GET request is made to the homepage
-app.get('/', function (req, res) {
-  res.render('index', { title: 'Hey', message: 'Hello there!' })
-})
-app.listen(3000, () => console.log('Example app listening on port 3000!'))
-
-// let wechat =new Wechat(config)
+app.use(convert(wechat(config.wechat)))
+app.listen(3000)
+console.log('linsting 3000')
